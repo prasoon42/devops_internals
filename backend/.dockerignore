@@ -1,0 +1,6 @@
+# Don't copy node_modules into the Docker image
+# We install fresh dependencies inside the container
+node_modules
+
+# Don't copy npm debug logs
+npm-debug.log

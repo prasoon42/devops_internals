@@ -1,0 +1,40 @@
+# ============================================
+# Docker Compose - Todo App
+# ============================================
+# This file defines both services (frontend + backend)
+# and how they connect to each other.
+# Run with: docker-compose up --build
+# ============================================
+
+version: "3.8"
+
+services:
+  # --- Backend Service ---
+  backend:
+    # Name of the container
+    container_name: todo-backend
+    # Build from the ./backend directory
+    build: ./backend
+    # Map host port 5000 -> container port 5000
+    ports:
+      - "5000:5000"
+    # Environment variables for the backend
+    environment:
+      - PORT=5000
+
+  # --- Frontend Service ---
+  frontend:
+    # Name of the container
+    container_name: todo-frontend
+    # Build from the ./frontend directory
+    build: ./frontend
+    # Map host port 3000 -> container port 3000
+    ports:
+      - "3000:3000"
+    # Environment variables for the frontend
+    # VITE_API_URL tells React where the backend is
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    # Frontend depends on backend (backend starts first)
+    depends_on:
+      - backend
